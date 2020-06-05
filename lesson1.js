@@ -1,10 +1,21 @@
-let money = 100, 
-   income = 2000, 
-   addExpenses = 50, 
-   deposit = 9999, 
-   mission = 'Study hard with good results!', 
-   period = Date();
+let money = 1500, 
+   income = 900, 
+   addExpenses = '250, 77, 128.5', 
+   deposit = true, 
+   mission = 10000, 
+   period = 2;
 
-alert(mission);
+console.log( typeof money );
+console.log( typeof income );
+console.log( typeof deposit );
 
-console.log(period);
+console.log( addExpenses.length );
+console.log( `Период равен ${period} месяцев` );
+console.log('Цель заработать '+ mission 
+    + ' рублей/долларов/гривен/юани');
+
+arrAddExpeses = addExpenses.toLowerCase().split(', ');
+console.log( arrAddExpeses );
+
+let budgetDay  = income / 30;    
+console.log('budgetDay: ', budgetDay);
