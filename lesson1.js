@@ -44,17 +44,14 @@ money = parseFloat(prompt("Ваш месячный доход?"));
 // #2
 addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую?");
 // 3
-let depositAnswer = prompt("Есть ли у вас депозит в банке? (Да/Нет)");
+deposit = confirm("Есть ли у вас депозит в банке? (Да/Нет)");
 
-if (depositAnswer.trim().toLowerCase() === "да") {
-    deposit = true;
+if (deposit) {
     console.log('Есть депозит в банке.');
-} else if (depositAnswer.trim().toLowerCase() === "нет") {
-    deposit = false;
+} else if (!deposit) {
     console.log('Нет депозита в банке.');
 } else {
     console.log('Ответ о депозите не получен.');
-    deposit = null;
 }
 
 // #5
