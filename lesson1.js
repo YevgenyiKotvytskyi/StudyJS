@@ -45,16 +45,17 @@ money = parseFloat(prompt("Ваш месячный доход?"));
 addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую?");
 // 3
 let depositAnswer = prompt("Есть ли у вас депозит в банке? (Да/Нет)");
-console.log('depositAnswer: ', depositAnswer.trim().toLowerCase());
 
 if (depositAnswer.trim().toLowerCase() === "да") {
     deposit = true;
+    console.log('Есть депозит в банке.');
 } else if (depositAnswer.trim().toLowerCase() === "нет") {
     deposit = false;
+    console.log('Нет депозита в банке.');
 } else {
+    console.log('Ответ о депозите не получен.');
     deposit = null;
 }
-console.log('deposit: ', deposit);
 
 // #5
 let
@@ -65,25 +66,23 @@ let
 
 // #6    
 
-// let sumAddExpenses = 0;
 
-// addExpenses.split(',').forEach(element => {
-//     sumAddExpenses += parseFloat(element); 
-// });
+console.log('addExpenses: ', addExpenses.split(','));
 
 let obligatoryExpends = amount1 + amount2;
 
 //#6
 let budgetMonth = money - obligatoryExpends;
-console.log('budgetMonth: ', budgetMonth);
+console.log('Бюджет на месяц: ', budgetMonth);
 
 //#7
 let monthMission = Math.ceil(mission / budgetMonth);
-console.log('monthMission: ', monthMission);
+console.log(`Цель заработать ${mission} рублей/долларов/гривень.`);
+console.log('Цель будет достигнута за, мес.: ', monthMission);
 
 //#8
 budgetDay = budgetMonth / 30;
-console.log('budgetDay: ', Math.floor(budgetDay));
+console.log('Бюджет на день: ', Math.floor(budgetDay));
 
 //#9
 
