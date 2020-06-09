@@ -49,11 +49,7 @@ console.log('Расходы за месяц (getExpensesMonth): ', getExpensesMo
 
 //#2
 function getAccumulatedMonth() {
-    let sumAddExpenses = 0;
-    addExpenses.split(',').forEach(element => {
-        sumAddExpenses += +(element);
-    });
-    return money - getExpensesMonth() - sumAddExpenses;
+    return money - getExpensesMonth();
 }
 
 console.log('Вывод возможных расходов в виде массива (addExpenses): ', addExpenses.split(','));
