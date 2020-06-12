@@ -7,7 +7,7 @@ alert, confirm, console, prompt
 
 document.querySelector('h1').innerHTML = "Lesson 6";
 
-let  money;
+let money;
 
 
 let isNumber = function (n) {
@@ -29,25 +29,25 @@ let appData = {
     deposit: false,
 
     asking: function () {
-        let addExpenses = prompt("Перечислите возможные расходы через запятую.","Кино, Поход");
+        let addExpenses = prompt("Перечислите возможные расходы через запятую.", "Кино, Поход");
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm("Есть ли у вас депозит в банке?");
     },
 
-    setExpensesMonth: function() {
+    setExpensesMonth: function () {
 
         appData.expenses = {};
         let currentExpence;
         for (let i = 0; i < 2; i++) {
             currentExpence = prompt('Введите обязательную статью расходов?', `Статья ${i + 1}`);
-            if ( !(( currentExpence.trim() == '') ||  (currentExpence == null))) {
+            if (!((currentExpence.trim() == '') || (currentExpence == null))) {
                 appData.expenses[currentExpence] = askNumber(`Во сколько это обойдется? (${currentExpence})`);
             }
         }
 
         let sum = 0;
 
-        for (const property in appData.expenses){
+        for (const property in appData.expenses) {
             sum += +appData.expenses[property];
         }
         appData.expensesMonth = sum;
@@ -105,4 +105,3 @@ console.log('Расходы за месяц (appData.expensesMonth): ', appData.
     : console.log('Цель не будет достигнута');
 
 console.log(`Статус дохода ( appData.budgetDay = ${appData.budgetDay} ): `, appData.getStatusIncome());
-
