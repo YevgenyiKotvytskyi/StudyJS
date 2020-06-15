@@ -11,7 +11,7 @@ let money;
 
 
 let isNumber = function (n) {
-    return !isNaN(n) && isFinite(n);
+    return !isNaN(n) && isFinite(n) && n.trim() !== '';
 };
 
 start();
@@ -116,7 +116,7 @@ function askText(question, help = 0) {
     do {
         text = prompt(question, help);
     }
-    while (isNumber(text) || text === null);
+    while (isNumber(text) || text === null || text.trim() == '');
     return text;
 }
 
