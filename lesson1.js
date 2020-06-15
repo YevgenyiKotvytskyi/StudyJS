@@ -38,7 +38,7 @@ let appData = {
             appData.income[incomeName] = amount;
         }
 
-        let addExpenses = prompt("Перечислите возможные расходы через запятую.", "Кино, Поход");
+        let addExpenses = askText("Перечислите возможные расходы через запятую.", "Кино, Поход");
         appData.addExpenses = addExpenses.toLowerCase().split(',');
 
         appData.deposit = confirm("Есть ли у вас депозит в банке?");
@@ -52,7 +52,7 @@ let appData = {
         for (let i = 0; i < 2; i++) {
             currentExpence = prompt('Введите обязательную статью расходов?', `Статья ${i + 1}`);
             if (!((currentExpence.trim() == '') || (currentExpence == null))) {
-                appData.expenses[currentExpence] = askNumber(`Во сколько это обойдется? (${currentExpence})`, (i + 1) * 1000 );
+                appData.expenses[currentExpence] = askNumber(`Во сколько это обойдется? (${currentExpence})`, (i + 1) * 1000);
             }
         }
 
@@ -103,9 +103,9 @@ function askNumber(question, help = '') {
     let num;
 
     do {
-        num = prompt(question,help);
+        num = prompt(question, help);
     }
-    while (!isNumber(num));
+    while (!isNumber(num) || num === null);
 
     return +num;
 }
@@ -114,10 +114,9 @@ function askText(question, help = 0) {
     let text;
 
     do {
-        text = prompt(question,help);
+        text = prompt(question, help);
     }
-    while (isNumber(text));
-
+    while (isNumber(text) || text === null);
     return text;
 }
 
@@ -140,11 +139,11 @@ console.log('Расходы за месяц (appData.expensesMonth): ', appData.
 
 console.log(`Статус дохода ( appData.budgetDay = ${appData.budgetDay} ): `, appData.getStatusIncome());
 
-( function () {
+(function () {
     let result = '';
     for (const item of appData.addExpenses) {
         result += ', ' + item.trim()[0].toUpperCase() + item.trim().slice(1);
     }
     result = result.slice(2);
-    console.log('result: ', result);
+    console.log(result);
 }());
