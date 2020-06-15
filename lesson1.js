@@ -27,11 +27,22 @@ let appData = {
     budgetDay: 0,
     period: 2,
     deposit: false,
+    percentDeposit: 0,
+    moneyDeposit: 0,
 
     asking: function () {
+
+        if (confirm("У Вас есть дополнительный заработок?")) {
+            const incomeName = askText('Какой вид дополнительного заработка вы имеете?', 'Консультирование');
+            const amount = askNumber('Введите сумму заработка', '1500');
+            appData.income[incomeName] = amount;
+        }
+
         let addExpenses = prompt("Перечислите возможные расходы через запятую.", "Кино, Поход");
         appData.addExpenses = addExpenses.toLowerCase().split(',');
+
         appData.deposit = confirm("Есть ли у вас депозит в банке?");
+        appData.getInfoDeposit();
     },
 
     setExpensesMonth: function () {
@@ -41,7 +52,7 @@ let appData = {
         for (let i = 0; i < 2; i++) {
             currentExpence = prompt('Введите обязательную статью расходов?', `Статья ${i + 1}`);
             if (!((currentExpence.trim() == '') || (currentExpence == null))) {
-                appData.expenses[currentExpence] = askNumber(`Во сколько это обойдется? (${currentExpence})`);
+                appData.expenses[currentExpence] = askNumber(`Во сколько это обойдется? (${currentExpence})`, (i + 1) * 1000 );
             }
         }
 
@@ -73,23 +84,46 @@ let appData = {
         } else {
             return "Что то пошло не так";
         }
+    },
+
+    getInfoDeposit() {
+        if (appData.deposit) {
+            appData.percentDeposit = askNumber('Какой годовой процент?', '10');
+            appData.moneyDeposit = askNumber('Какая сумма депозита?', '15000');
+        }
+    },
+
+    calcSavedMoney() {
+        return appData.budgetMonth * appData.period;
     }
 
 };
 
-function askNumber(question) {
+function askNumber(question, help = '') {
     let num;
 
     do {
-        num = prompt(question);
+        num = prompt(question,help);
     }
     while (!isNumber(num));
 
     return +num;
 }
 
+function askText(question, help = 0) {
+    let text;
+
+    do {
+        text = prompt(question,help);
+    }
+    while (isNumber(text));
+
+    return text;
+}
+
+
 function start() {
-    money = askNumber("Ваш месячный доход?");
+    money = askNumber("Ваш месячный доход?", 50000);
 }
 
 appData.asking();
@@ -105,3 +139,12 @@ console.log('Расходы за месяц (appData.expensesMonth): ', appData.
     : console.log('Цель не будет достигнута');
 
 console.log(`Статус дохода ( appData.budgetDay = ${appData.budgetDay} ): `, appData.getStatusIncome());
+
+( function () {
+    let result = '';
+    for (const item of appData.addExpenses) {
+        result += ', ' + item.trim()[0].toUpperCase() + item.trim().slice(1);
+    }
+    result = result.slice(2);
+    console.log('result: ', result);
+}());
