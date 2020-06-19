@@ -81,6 +81,7 @@ let appData = {
 
     addExpensesBlock () {
         const cloneExpensisItem = expensesItems[0].cloneNode(true);
+        cloneExpensisItem.querySelectorAll('input').forEach( element => element.value = '');
         expensesItems[0].parentNode.insertBefore(cloneExpensisItem,secondPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3) {
@@ -90,8 +91,9 @@ let appData = {
     },
 
     addIncomeBlock () {
-        const cloneExpensisItem = incomeItems[0].cloneNode(true);
-        incomeItems[0].parentNode.insertBefore(cloneExpensisItem,firstPlus);
+        const cloneIncomeItem = incomeItems[0].cloneNode(true);
+        cloneIncomeItem.querySelectorAll('input').forEach( element => element.value = '');
+        incomeItems[0].parentNode.insertBefore(cloneIncomeItem,firstPlus);
         incomeItems = document.querySelectorAll('.income-items');
         if (incomeItems.length === 3) {
             firstPlus.style.display = 'none';
@@ -177,13 +179,6 @@ let appData = {
         }
     },
 
-    getInfoDeposit() {
-        if (appData.deposit) {
-            appData.percentDeposit = askNumber('Какой годовой процент?', '10');
-            appData.moneyDeposit = askNumber('Какая сумма депозита?', '15000');
-        }
-    },
-
     calcSavedMoney() {
         return appData.budgetMonth * periodSelect.value;
     }
@@ -197,6 +192,21 @@ function canCalculate () {
 }
 
 salaryAmount.addEventListener('input',canCalculate);
+                                                    
+document.querySelector('.data').addEventListener('keypress', function inputControl(event){
+    let charCode = (event.which) ? event.which : event.keyCode;
+    let rigtKey = false;
+    const punctuationMarks = [32,44,46,58,59,63];
+
+    if ( event.target.placeholder === 'Сумма' && (charCode > 48 && charCode < 57 || charCode == 46 ) )
+        rigtKey  = true;
+
+    if ( event.target.placeholder === 'Наименование' && (charCode > 1039 && charCode < 1106 || 
+        punctuationMarks.includes(charCode) ) )
+        rigtKey  = true;
+
+    if ( !rigtKey ) event.preventDefault();
+});
 
 calculate.addEventListener('click', appData.start );
 
