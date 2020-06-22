@@ -216,15 +216,12 @@ function canCalculate() {
 salaryAmount.addEventListener('input', canCalculate);
 
 document.querySelector('.data').addEventListener('keypress', function inputControl(event) {
-    let charCode = (event.which) ? event.which : event.keyCode;
     let rigtKey = false;
-    const punctuationMarks = [32, 44, 46, 58, 59, 63];
 
-    if (event.target.placeholder === 'Сумма' && (charCode > 48 && charCode < 57 || charCode == 46))
+    if (event.target.placeholder === 'Сумма' && event.key.match(/\d|\./))
         rigtKey = true;
 
-    if (event.target.placeholder === 'Наименование' && (charCode > 1039 && charCode < 1106 ||
-        punctuationMarks.includes(charCode)))
+    if (event.target.placeholder === 'Наименование' &&  event.key.match(/[а-яА-Я]|\s|\,|\:|\d|\./))
         rigtKey = true;
 
     if (!rigtKey) event.preventDefault();
@@ -260,11 +257,6 @@ let isNumber = function (n) {
     return !isNaN(n) && isFinite(n) && n.trim() !== '';
 };
 
-/* ======== Fill init data for a test ======== */
-
-document.querySelector('h1').addEventListener('click', initData);
-
-
 function resetData() {
 
     salaryAmount.value = '';
@@ -293,6 +285,11 @@ function resetData() {
     canCalculate();
 
 }
+
+/* ======== Fill init data for a test ======== */
+
+document.querySelector('h1').addEventListener('click', initData);
+
 
 function initData() {
 
