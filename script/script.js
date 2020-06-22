@@ -216,12 +216,14 @@ function canCalculate() {
 salaryAmount.addEventListener('input', canCalculate);
 
 document.querySelector('.data').addEventListener('keypress', function inputControl(event) {
+    const 
+        key = event.key,
+        placeholder = event.target.placeholder; 
     let rigtKey = false;
 
-    if (event.target.placeholder === 'Сумма' && event.key.match(/\d|\./))
-        rigtKey = true;
-
-    if (event.target.placeholder === 'Наименование' &&  event.key.match(/[а-яА-Я]|\s|\,|\:|\d|\./))
+    if (!( placeholder === 'Наименование' ||  placeholder === 'Сумма') ||
+        ( placeholder === 'Сумма' && key.match(/\d|\./)) ||
+        ( placeholder === 'Наименование' &&  key.match(/[а-яА-Я]|\s|\,|\:|\d|\./)) )
         rigtKey = true;
 
     if (!rigtKey) event.preventDefault();
