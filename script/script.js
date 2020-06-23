@@ -229,8 +229,11 @@ document.querySelector('.data').addEventListener('keypress', function inputContr
     if (!rigtKey) event.preventDefault();
 });
 
+let startAppData = appData.start.bind(appData);
+
 calculate.addEventListener('click', (event) => {
-    appData.start();
+    //appData.start();
+    startAppData();
     startButton.style.display = 'none';
     cancelButton.style.display = 'inline-block';
     textInput.forEach((element) => {
