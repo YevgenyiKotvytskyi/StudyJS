@@ -35,6 +35,7 @@ let
     cancelButton = document.getElementById('cancel'),
     result = document.querySelectorAll('.result input'),
     textInput = document.querySelectorAll('.data input[type=text]');
+    periodSelect = document.querySelector('input.period-select');
 
 let isNumber = function (n) {
     return !isNaN(n) && isFinite(n) && n.trim() !== '';
@@ -249,6 +250,7 @@ AppData.prototype.eventListener = function () {
         textInput.forEach((element) => {
             element.disabled = true;
         });
+        periodSelect.disabled = true;
     });
 
     cancelButton.addEventListener('click', (event) => {
@@ -257,6 +259,7 @@ AppData.prototype.eventListener = function () {
         textInput.forEach((element) => {
             element.disabled = false;
         });
+        periodSelect.disabled = false;
         resetData();
     });
 
