@@ -214,10 +214,16 @@ class AppData {
         return this.budgetMonth * periodSelect.value;
     }
 
+    depositHandler(){
+        
+    }
+    
     eventListener() {
 
         //const _this = this;
 
+        checkboxDeposit.addEventListener('click',this.depositHandler);
+        
         startButton.disabled = true;
 
         salaryAmount.addEventListener('input', this.canCalculate);
