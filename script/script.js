@@ -35,7 +35,7 @@ let
     cancelButton = document.getElementById('cancel'),
     result = document.querySelectorAll('.result input'),
     textInput = document.querySelectorAll('.data input[type=text]');
-    periodSelect = document.querySelector('input.period-select');
+periodSelect = document.querySelector('input.period-select');
 
 let isNumber = function (n) {
     return !isNaN(n) && isFinite(n) && n.trim() !== '';
@@ -251,6 +251,7 @@ AppData.prototype.eventListener = function () {
             element.disabled = true;
         });
         periodSelect.disabled = true;
+        checkboxDeposit.disabled = true;
     });
 
     cancelButton.addEventListener('click', (event) => {
@@ -260,6 +261,7 @@ AppData.prototype.eventListener = function () {
             element.disabled = false;
         });
         periodSelect.disabled = false;
+        checkboxDeposit.disabled = false;
         resetData();
     });
 
@@ -301,19 +303,15 @@ AppData.prototype.eventListener = function () {
 
     }
 
-}
+};
 
 const appData = new AppData();
 
 appData.eventListener();
-appData.start();
-
 
 /* ======== Fill init data for a test ======== */
 
-
 document.querySelector('h1').addEventListener('click', initData);
-
 
 function initData() {
 
@@ -322,14 +320,12 @@ function initData() {
     for (let i = 0; i < incomeItems.length; i++) {
         incomeItems[i].querySelector('.income-title').value = `Статья доп. дохода ${i + 1}`;
         incomeItems[i].querySelector('.income-amount').value = `${i * 1000 + 500}`;
-
     }
 
     expensesItems = document.querySelectorAll('.expenses-items');
     for (let i = 0; i < expensesItems.length; i++) {
         expensesItems[i].querySelector('.expenses-title').value = `Статья расхода ${i + 1}`;
         expensesItems[i].querySelector('.expenses-amount').value = `${(i + 1) * 1000}`;
-
     }
 
     additionalExpensesItem.value = 'кино, походы, ,';
