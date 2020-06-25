@@ -34,7 +34,8 @@ let
     startButton = document.getElementById('start'),
     cancelButton = document.getElementById('cancel'),
     result = document.querySelectorAll('.result input'),
-    textInput = document.querySelectorAll('.data input[type=text]');
+    textInput = document.querySelectorAll('.data input[type=text]'),
+    depositCheck = document.querySelector('#deposit-check');
 
 let isNumber = function (n) {
     return !isNaN(n) && isFinite(n) && n.trim() !== '';
@@ -236,8 +237,6 @@ class AppData {
             if (!rigtKey) event.preventDefault();
         });
 
-        //let startAppData = this.start.bind(this);
-
         calculate.addEventListener('click', (event) => {
             this.start();
             startButton.style.display = 'none';
@@ -245,6 +244,10 @@ class AppData {
             textInput.forEach((element) => {
                 element.disabled = true;
             });
+
+            depositCheck.disabled = true;
+            periodSelect.disabled = true;            
+
         });
 
         cancelButton.addEventListener('click', (event) => {
@@ -292,6 +295,10 @@ class AppData {
 
         this.reset();
         this.canCalculate();
+        periodSelect.value = 1;
+        periodAmount.value = 1;
+        depositCheck.disabled = false;
+        periodSelect.disabled = false;
     }
 
     canCalculate() {
@@ -304,7 +311,6 @@ class AppData {
 const appData = new AppData();
 
 appData.eventListener();
-appData.start();
 
 
 /* ======== Fill init data for a test ======== */
