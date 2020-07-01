@@ -42,8 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const toggelmenu = () => {
 
-        const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu');
+        const menu = document.querySelector('menu');
 
         // const moveMenu = animation => {
 
@@ -76,19 +75,24 @@ window.addEventListener('DOMContentLoaded', () => {
         // };
 
         const handlerMenu = event => {
-            //const animation = (document.documentElement.clientWidth > 768);
-            //moveMenu(animation);
+
             const target = event.target;
+            console.log('target: ', target);
 
             if (target.classList.contains('close-btn') ||
                 target.closest('.menu') ||
-                target.closest('li'))  menu.classList.toggle('active-menu');
+                target.closest('li')
+            ) {
+                console.log('target: ', target, target.closest('.menu'));
+                menu.classList.toggle('active-menu');
+            } else {
+                if (!target.closest('menu')) {
+                    menu.classList.remove('active-menu');
+                }
+            }
         };
 
-        btnMenu.addEventListener('click', handlerMenu);
-
-        menu.addEventListener('click', handlerMenu);
-
+        document.body.addEventListener('click', handlerMenu);
     };
 
     toggelmenu();
