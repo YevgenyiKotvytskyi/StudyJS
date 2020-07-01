@@ -43,54 +43,51 @@ window.addEventListener('DOMContentLoaded', () => {
     const toggelmenu = () => {
 
         const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu'),
-            btnClose = document.querySelector('.close-btn'),
-            menuItems = document.querySelectorAll('ul>li');
+            menu = document.querySelector('menu');
 
-        const moveMenu = animation => {
+        // const moveMenu = animation => {
 
-            const start = Date.now();
-            const startPosition = -100,
-                direction = (menu.style.transform === 'translateX(100%)') ? -1 : 1;
+        //     const start = Date.now();
+        //     const startPosition = -100,
+        //         direction = (menu.style.transform === 'translateX(100%)') ? -1 : 1;
 
-            if (animation) {
-                const timer = setInterval(() => {
+        //     if (animation) {
+        //         const timer = setInterval(() => {
 
-                    const timePassed = Date.now() - start;
+        //             const timePassed = Date.now() - start;
 
-                    if (timePassed > 1000) {
-                        clearInterval(timer);
-                        menu.style.transform = `translateX(${direction * (100)}%)`;
-                        return;
-                    }
+        //             if (timePassed > 1000) {
+        //                 clearInterval(timer);
+        //                 menu.style.transform = `translateX(${direction * (100)}%)`;
+        //                 return;
+        //             }
 
-                    draw(timePassed);
+        //             draw(timePassed);
 
-                }, 20);
-            } else {
-                menu.style.transform = `translateX(${direction * (100)}%)`;
-            }
+        //         }, 20);
+        //     } else {
+        //         menu.style.transform = `translateX(${direction * (100)}%)`;
+        //     }
 
-            function draw(timePassed) {
-                menu.style.transform = `translateX(${direction * (startPosition + timePassed / 5)}%)`;
-            }
+        //     function draw(timePassed) {
+        //         menu.style.transform = `translateX(${direction * (startPosition + timePassed / 5)}%)`;
+        //     }
 
-        };
+        // };
 
-        const handlerMenu = () => {
-            const animation = (document.documentElement.clientWidth > 768);
-            moveMenu(animation);
+        const handlerMenu = event => {
+            //const animation = (document.documentElement.clientWidth > 768);
+            //moveMenu(animation);
+            const target = event.target;
 
-            //menu.classList.toggle('active-menu');
+            if (target.classList.contains('close-btn') ||
+                target.closest('.menu') ||
+                target.closest('li'))  menu.classList.toggle('active-menu');
         };
 
         btnMenu.addEventListener('click', handlerMenu);
 
-        btnClose.addEventListener('click', handlerMenu);
-
-        menuItems.forEach(elem => {
-            elem.addEventListener('click', handlerMenu);
-        });
+        menu.addEventListener('click', handlerMenu);
 
     };
 
@@ -179,5 +176,53 @@ window.addEventListener('DOMContentLoaded', () => {
     menuScroll();
 
     //#endregion menu scroll
+
+
+    //#region menu tabs
+
+    const tab = () => {
+
+        const serviceHeaderTabs = document.querySelectorAll('.service-header .service-header-tab'),
+            serviceHeader = document.querySelector('.service-header'),
+            serviceTabs = document.querySelectorAll('.service-tab');
+
+        const handlerHeader = event => {
+
+            const target = event.target;
+
+            const showPanel = index => {
+                serviceTabs.forEach((elem, i) => {
+                    if (index === i) {
+                        elem.classList.remove('d-none');
+                    } else {
+                        elem.classList.add('d-none');
+                    }
+                });
+            };
+
+            const botton = target.closest('.service-header-tab');
+
+            if (botton) {
+
+                serviceHeaderTabs.forEach((elem, i) => {
+
+                    if (elem === botton) {
+                        elem.classList.add('active');
+                        showPanel(i);
+                    } else {
+                        elem.classList.remove('active');
+                    }
+
+                });
+            }
+        };
+
+        serviceHeader.addEventListener('click', handlerHeader);
+
+    };
+
+    tab();
+
+    //#endregion menu tabs
 
 });
