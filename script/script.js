@@ -36,9 +36,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    countTimer('31 juny 2020 14:00');
+    countTimer('02 july 2020 14:00');
 
-    // -- menu --
+    //#region menu
 
     const toggelmenu = () => {
 
@@ -96,9 +96,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     toggelmenu();
 
+    //#endregion menu
 
-
-    // -- popup --
+    //#region popup
 
     const togglePopUp = () => {
 
@@ -117,6 +117,67 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     togglePopUp();
+    //#endregion popup
 
+    //#region menu scroll
+
+    const menuScroll = () => {
+
+        const menuItems = document.querySelectorAll('ul>li'),
+            serviceLink = document.querySelector("a[href='#service-block']");
+
+        const moveScroll = finishPosition => {
+
+            const start = Date.now(),
+                startPosition = document.documentElement.scrollTop,
+                lasting = 1000,
+                delay = 20,
+                addScale = (finishPosition - startPosition) / lasting;
+
+            const timer = setInterval(() => {
+
+                const timePassed = Date.now() - start;
+
+                if (timePassed > 1000) {
+                    clearInterval(timer);
+                    document.documentElement.scrollTop = finishPosition;
+                    return;
+                }
+
+                draw(timePassed);
+
+            }, delay);
+
+            function draw(timePassed) {
+                document.documentElement.scrollTop = startPosition + timePassed * addScale;
+            }
+
+        };
+
+        const scrollToLink = link => {
+            if (link) {
+                const linkElement = document.querySelector(link.getAttribute("href"));
+                const refTop = linkElement.getBoundingClientRect().top;
+                moveScroll(refTop);
+            }
+        };
+
+        const handlerMenuScroll = event => {
+            event.preventDefault();
+            const link = event.target.closest('a');
+            scrollToLink(link);
+        };
+
+        serviceLink.addEventListener('click', handlerMenuScroll);
+
+        menuItems.forEach(elem => {
+            elem.addEventListener('click', handlerMenuScroll);
+        });
+
+    };
+
+    menuScroll();
+
+    //#endregion menu scroll
 
 });
