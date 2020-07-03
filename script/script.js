@@ -133,10 +133,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const moveScroll = finishPosition => {
 
             const start = Date.now(),
-                startPosition = document.documentElement.scrollTop,
+                startPosition =  document.documentElement.scrollTop,
                 lasting = 1000,
                 delay = 20,
-                addScale = (finishPosition - startPosition) / lasting;
+                addScale = finishPosition / lasting;
 
             const timer = setInterval(() => {
 
@@ -144,7 +144,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (timePassed > 1000) {
                     clearInterval(timer);
-                    document.documentElement.scrollTop = finishPosition;
+                    document.documentElement.scrollTop = startPosition + finishPosition;
                     return;
                 }
 
