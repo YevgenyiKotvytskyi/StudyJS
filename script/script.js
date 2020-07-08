@@ -404,6 +404,27 @@ window.addEventListener('DOMContentLoaded', () => {
             calcDay = document.querySelector('.calc-day'),
             totalValue = document.getElementById('total');
 
+        const showResult = result => {
+            const delay = 20,
+                interval = 2500,
+                diff = result / interval * delay,
+                stopValue = result - diff;
+
+            let start = 0;
+
+            const timerId = setInterval(() => {
+                start += diff;
+                if (start < stopValue) {
+                    totalValue.textContent = Math.ceil(start);
+                } else {
+                    clearInterval(timerId);
+                    start = result;
+                }
+                totalValue.textContent =  Math.ceil(start);
+            }, delay);
+        };
+
+
         const handlerCalc = e => {
             const target = e.target;
             let total = 0,
@@ -412,6 +433,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if (target.matches('select') || target.matches('input')) {
                 const typeValue = calcType.options[calcType.selectedIndex].value,
                     squareValue = +calcSquare.value;
+
                 if (calcCount.value) {
                     countValue += (calcCount.value - 1) / 10;
                 }
@@ -429,7 +451,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            totalValue.textContent = total;
+            if (total) {
+                showResult(total);
+            } else {
+                totalValue.textContent = total;
+            }
 
         };
 
