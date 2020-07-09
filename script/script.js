@@ -1,4 +1,3 @@
-
 window.addEventListener('DOMContentLoaded', () => {
 //    'use strict';
 
@@ -375,7 +374,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const handlerInputDigits = e => {
             const target = e.target;
-            //            debugger;
             if (target.matches('input.calc-item')) {
                 target.value = target.value.replace(/\D/, '');
                 //                const key = e.key;
