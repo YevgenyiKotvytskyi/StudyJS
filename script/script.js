@@ -464,7 +464,123 @@ window.addEventListener('DOMContentLoaded', () => {
     calc(100);
 
 
-    //#endregion calc
+    //#endregion
 
+    //#region Ajax запрос
+    const sendForm = formId => {
+
+        const errorMessage = 'Что то пошло не так ..',
+            loadMessage = 'Загрузка ..',
+            successMessage = 'Спасибо! Мы с Вами скоро свяжемся!';
+
+        const form = document.getElementById(formId);
+
+        const statusMessage = document.createElement('div');
+        statusMessage.style.cssText =
+        `font-size: 2rem;
+        color: white;`;
+
+        form.addEventListener('submit', e => {
+
+            e.preventDefault();
+            // eslint-disable-next-line no-use-before-define
+            if (!isValid()) return;
+            form.appendChild(statusMessage);
+
+            const formData = new FormData(form);
+            const body = {};
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+
+            statusMessage.textContent = loadMessage;
+
+            // eslint-disable-next-line no-use-before-define
+            postData(body,
+                () => {
+                    statusMessage.textContent = successMessage;
+                    [...form.elements].forEach(elem => {
+                        if (elem.value) elem.value = '';
+                    });
+                },
+                error => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                }
+            );
+        });
+
+
+        const isValid = () => {
+            const tel = document.querySelector(`#${formId} [type=tel]`),
+                phone = /^\+?\d*$/;
+            if (tel) {
+                if (tel.value.trim() === '' || !phone.test(tel.value)) {
+                    tel.style.border = 'solid red';
+                    return false;
+                } else {
+                    tel.style.border = '';
+                    return true;
+                }
+            }
+            return true;
+        };
+
+        const postData = (body, outputData, errorData) => {
+
+            const request = new XMLHttpRequest();
+
+            request.addEventListener('readystatechange', () => {
+
+                if (request.readyState !== 4) {
+                    return;
+                }
+
+                if (request.status === 200) {
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+
+            });
+
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+
+            request.send(JSON.stringify(body));
+
+        };
+
+    };
+
+    sendForm('form2');
+    sendForm('form3');
+
+    //#endregion
+
+    //#region form input filter
+    const validation = formId => {
+
+        const form = document.getElementById(formId),
+            name = /[а-яА-ЯёЁ\s]+/g,
+            message = /[?!,.а-яА-ЯёЁ0-9\s]+/g;
+
+        const handlerKey = e => {
+            const target = e.target;
+            if (target.matches('[name=user_name]')) {
+                target.value =  [...target.value.matchAll(name)].join('');
+            } else if (target.matches('[name=user_message]')) {
+                target.value =  [...target.value.matchAll(message)].join('');
+            }
+        };
+
+        form.addEventListener('input', handlerKey);
+
+    };
+
+    validation('form2');
+    validation('form3');
+    //#endregion
 
 });

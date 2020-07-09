@@ -145,7 +145,7 @@ const validForm1 = new Validator({
     }
 });
 
-validForm1.init();
+//validForm1.init();
 
 
 const validForm2 = new Validator({
