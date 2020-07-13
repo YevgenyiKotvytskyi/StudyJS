@@ -470,7 +470,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const sendForm = formId => {
 
         const errorMessage = 'Что то пошло не так ..',
-            loadMessage = 'Загрузка ..',
             successMessage = 'Спасибо! Мы с Вами скоро свяжемся!';
 
         const form = document.getElementById(formId);
@@ -524,6 +523,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
         form.addEventListener('submit', e => {
 
+            const isValid = () => {
+                const tel = document.querySelector(`#${formId} [type=tel]`),
+                    phone = /^\+?\d*$/;
+                if (tel) {
+                    if (tel.value.trim() === '' || !phone.test(tel.value)) {
+                        tel.style.border = 'solid red';
+                        return false;
+                    } else {
+                        tel.style.border = '';
+                        return true;
+                    }
+                }
+                return true;
+            };
+
             e.preventDefault();
             // eslint-disable-next-line no-use-before-define
             if (!isValid()) return;
@@ -536,43 +550,30 @@ window.addEventListener('DOMContentLoaded', () => {
                 body[key] = val;
             });
 
-            // eslint-disable-next-line no-use-before-define
-            postData(body,
-                () => {
-                    showPreloader(false);
-                    statusMessage.textContent = successMessage;
-                    form.appendChild(statusMessage);
-                    [...form.elements].forEach(elem => {
-                        if (elem.value) elem.value = '';
-                    });
+            const succesPost = () => {
+                showPreloader(false);
+                statusMessage.textContent = successMessage;
+                form.appendChild(statusMessage);
+                [...form.elements].forEach(elem => {
+                    if (elem.value) elem.value = '';
+                });
+            };
 
-                },
-                error => {
-                    showPreloader(false);
-                    form.appendChild(statusMessage);
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                }
-            );
+            const errorPost = error => {
+                showPreloader(false);
+                form.appendChild(statusMessage);
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            };
+
+            // eslint-disable-next-line no-use-before-define
+            postData(body).
+                then(succesPost).
+                catch(errorPost);
         });
 
 
-        const isValid = () => {
-            const tel = document.querySelector(`#${formId} [type=tel]`),
-                phone = /^\+?\d*$/;
-            if (tel) {
-                if (tel.value.trim() === '' || !phone.test(tel.value)) {
-                    tel.style.border = 'solid red';
-                    return false;
-                } else {
-                    tel.style.border = '';
-                    return true;
-                }
-            }
-            return true;
-        };
-
-        const postData = (body, outputData, errorData) => {
+        const postData = body => new Promise((resolve, reject)  => {
 
             const request = new XMLHttpRequest();
 
@@ -583,9 +584,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (request.status === 200) {
-                    outputData();
+                    resolve();
+                    //outputData();
                 } else {
-                    errorData(request.status);
+                    reject(request.status);
+                    //errorData(request.status);
                 }
 
             });
@@ -595,7 +598,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             request.send(JSON.stringify(body));
 
-        };
+        });
 
     };
 
