@@ -567,38 +567,29 @@ window.addEventListener('DOMContentLoaded', () => {
             };
 
             // eslint-disable-next-line no-use-before-define
-            postData(body).
-                then(succesPost).
-                catch(errorPost);
+            postData(body, succesPost, errorPost);
         });
 
 
-        const postData = body => new Promise((resolve, reject)  => {
-
-            const request = new XMLHttpRequest();
-
-            request.addEventListener('readystatechange', () => {
-
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    resolve();
-                    //outputData();
-                } else {
-                    reject(request.status);
-                    //errorData(request.status);
-                }
-
-            });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-
-            request.send(JSON.stringify(body));
-
-        });
+        const postData = (body, succesPost, errorPost) => {
+            fetch('./server.php',
+                {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    cache: 'default',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                })
+                .then(response => {
+                    if (response.status !== 200) throw new Error('Status network 200!');
+                    succesPost();
+                })
+                .catch(error => {
+                    errorPost(error);
+                });
+        };
 
     };
 
