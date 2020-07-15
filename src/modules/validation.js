@@ -5,15 +5,16 @@ const validation = formId => {
         message = /[?!,.а-яА-ЯёЁ0-9\s]+/g;
 
     const handlerKey = e => {
-        const target = e.target;
+        const target = e.target,
+            key = event.key;
         if (target.matches('[name=user_name]')) {
-            target.value =  [...target.value.matchAll(name)].join('');
+            if (!key.match(name)) event.preventDefault();
         } else if (target.matches('[name=user_message]')) {
-            target.value =  [...target.value.matchAll(message)].join('');
+            if (!key.match(message)) event.preventDefault();
         }
     };
 
-    form.addEventListener('input', handlerKey);
+    form.addEventListener('keypress', handlerKey);
 
 };
 

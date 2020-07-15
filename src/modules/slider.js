@@ -1,26 +1,26 @@
 
 const slider = () => {
 
-    const reactiveteDots = () => {
+    // const reactiveteDots = () => {
 
-        document.querySelectorAll('li.dot').forEach(elem => elem.remove());
+    //     document.querySelectorAll('li.dot').forEach(elem => elem.remove());
 
-        const portfolioDots = document.querySelector('ul.portfolio-dots');
+    //     const portfolioDots = document.querySelector('ul.portfolio-dots');
 
-        const dot = document.createElement('li');
-        dot.classList.add('dot');
+    //     const dot = document.createElement('li');
+    //     dot.classList.add('dot');
 
-        document.querySelectorAll('.portfolio-content .portfolio-item').forEach((elem, i) => {
-            const newNode = dot.cloneNode();
-            if (i === 0) {
-                newNode.classList.add('dot-active');
-            }
-            portfolioDots.append(newNode);
-        });
+    //     document.querySelectorAll('.portfolio-content .portfolio-item').forEach((elem, i) => {
+    //         const newNode = dot.cloneNode();
+    //         if (i === 0) {
+    //             newNode.classList.add('dot-active');
+    //         }
+    //         portfolioDots.append(newNode);
+    //     });
 
-    };
+    // };
 
-    reactiveteDots();
+    // reactiveteDots();
 
 
     const slide = document.querySelectorAll('.portfolio-item'),

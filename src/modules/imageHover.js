@@ -28,8 +28,6 @@ const imageHover = () => {
         const target = e.target;
         if (target.matches('input.calc-item')) {
             target.value = target.value.replace(/\D/, '');
-            //                const key = e.key;
-            //                if (!(key.match(/\d|\./))) e.preventDefault();
         }
     };
 
