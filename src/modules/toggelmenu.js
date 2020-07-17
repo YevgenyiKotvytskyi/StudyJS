@@ -8,7 +8,7 @@ const toggelmenu = () => {
 
         if (target.classList.contains('close-btn') ||
             target.closest('.menu') ||
-            target.closest('menu li')
+            target.closest('menu a')
         ) {
             menu.classList.toggle('active-menu');
         } else {

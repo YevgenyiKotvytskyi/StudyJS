@@ -72,7 +72,6 @@ const sendForm = formId => {
         e.preventDefault();
         // eslint-disable-next-line no-use-before-define
         if (!isValid()) return;
-        showPreloader();
 
         const formData = new FormData(form);
         const body = {};
@@ -80,6 +79,8 @@ const sendForm = formId => {
         formData.forEach((val, key) => {
             body[key] = val;
         });
+
+        showPreloader();
 
         const succesPost = () => {
             showPreloader(false);
