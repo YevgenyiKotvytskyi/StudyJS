@@ -6,15 +6,24 @@ const validation = formId => {
 
     const handlerKey = e => {
         const target = e.target,
-            key = event.key;
-        if (target.matches('[name=user_name]')) {
-            if (!key.match(name)) event.preventDefault();
-        } else if (target.matches('[name=user_message]')) {
-            if (!key.match(message)) event.preventDefault();
+            input = target.value;
+
+        let template = null;
+
+        if (input && target.matches('[name=user_name]')) template = name;
+        if (input && target.matches('[name=user_message]')) template = message;
+        if (template) {
+            const arrInput = input.match(template);
+            if (arrInput) {
+                target.value = arrInput.join('');
+            } else {
+                target.value = '';
+            }
         }
+
     };
 
-    form.addEventListener('keypress', handlerKey);
+    form.addEventListener('input', handlerKey);
 
 };
 
