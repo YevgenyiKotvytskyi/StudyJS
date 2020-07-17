@@ -21,7 +21,6 @@ import validation from './modules/validation';
 
 
 const actionTime = new Date(new Date().getTime() + 12 * 60 * 60 * 1000);
-//actionTime = actionTime.setTime(actionTime.getTime() + 12 * 60 * 60 * 1000);
 countTimer(actionTime);
 
 toggelmenu();
