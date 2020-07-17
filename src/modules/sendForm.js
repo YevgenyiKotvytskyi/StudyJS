@@ -72,10 +72,10 @@ const sendForm = formId => {
         e.preventDefault();
         // eslint-disable-next-line no-use-before-define
         if (!isValid()) return;
-        showPreloader();
 
         const formData = new FormData(form);
         const body = {};
+        showPreloader();
 
         formData.forEach((val, key) => {
             body[key] = val;
@@ -103,6 +103,7 @@ const sendForm = formId => {
 
 
     const postData = (body, succesPost, errorPost) => {
+        console.log('body: ', body);
         fetch('./server.php',
             {
                 method: 'POST',

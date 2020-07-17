@@ -18,20 +18,13 @@ function countTimer(deadline) {
 
     function updateClock() {
         const timer = getTimeRemaining();
-
-        let seconds = timer.seconds;
-        if (seconds <= 0) seconds = 0;
-
         timerHour.textContent = ('0' + ((timer.hours > 0) ? timer.hours : 0))
             .slice(-2);
         timerMinutes.textContent = ('0' + ((timer.minutes > 0) ? timer.minutes : 0))
             .slice(-2);
-
-
-        timerSeconds.textContent =  ('00' + seconds).slice(-2);
-        //eslint-disable-next-line no-use-before-define
-        if (timer.seconds < 0) clearInterval(timerId);
-    }
+        timerSeconds.textContent =  ('00' + ((timer.seconds > 0) ? timer.seconds : 0))
+            .slice(-2);
+        if (timer.seconds < 0) clearInterval(timerId);    }
 
     const timerId = setInterval(updateClock, 1000);
 }

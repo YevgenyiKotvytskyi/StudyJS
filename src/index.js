@@ -1,4 +1,4 @@
-'use strict';
+
 
 import 'nodelist-foreach-polyfill';
 import "@babel/polyfill";
@@ -19,7 +19,10 @@ import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 import validation from './modules/validation';
 
-countTimer('16 july 2020 14:00');
+
+const actionTime = new Date(new Date().getTime() + 12 * 60 * 60 * 1000);
+//actionTime = actionTime.setTime(actionTime.getTime() + 12 * 60 * 60 * 1000);
+countTimer(actionTime);
 
 toggelmenu();
 
