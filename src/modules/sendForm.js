@@ -103,7 +103,6 @@ const sendForm = formId => {
 
 
     const postData = (body, succesPost, errorPost) => {
-        console.log('body: ', body);
         fetch('./server.php',
             {
                 method: 'POST',

@@ -1,3 +1,17 @@
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+  body .close-btn {
+      left:-53%;
+      transition: .2s;
+  }
+  
+  .active-menu .close-btn {
+      left:53%;
+      display: block;
+      transition: all 1s;
+  }
+}
+
 section.preloader {
     /* flex: 1 1 25%; */
     position: relative;
